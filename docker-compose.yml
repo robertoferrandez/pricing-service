@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  pricing-service:
+    build: .
+    ports:
+      - "8080:8080"
+      - "9092:9092"  # Puerto de H2 TCP
+    container_name: pricing-service

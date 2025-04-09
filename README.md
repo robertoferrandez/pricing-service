@@ -9,7 +9,10 @@ A Spring Boot-based service for retrieving and managing pricing information for 
 4. [Testing](#testing)
 
 ## About
-This project is a pricing service API built with Spring Boot, designed to query prices for products based on their brand and the requested date. The service interacts with a database, providing price details for a given product and brand, as well as managing edge cases such as missing parameters and invalid data inputs.
+Uso este espacio para comentar ciertas aclaraciones, en un principio he desarrollado este microservicio para que sea lo mas escalable posible, haciendo una separación en capas.
+Un poco con esa intencion he incluido ciertos bloques de código que aunque no se pedian (y aunque ahora mismo no se utilizan) sirven para representar el diseño de la aplicacion que tenia en mente.
+
+Ejemplos de ello son mapeos, creados que no se utilizan porque no son necesarios en PriceMapper, PricePolicy o la funcion isValidAt dentro de Price.
 
 ### Features:
 - **Query for prices** based on product, brand, and date.
@@ -17,6 +20,7 @@ This project is a pricing service API built with Spring Boot, designed to query 
 - Returns price details with the highest priority, ensuring the most relevant price is returned.
 - Implements a **global exception handler** for consistent error responses.
 - Documentation available via **Swagger UI**.
+- Docker functionality
 
 ## Installation
 
@@ -36,7 +40,7 @@ Follow these steps to set up the project on your local machine:
 2. **Build and Run the Application**
     ```bash
     mvn clean install
-    mvn spring-boot:run
+    mvn spring-boot:run or docker-compose up --build
 
 3. **Access the API via http://localhost:8080**
     ```bash
