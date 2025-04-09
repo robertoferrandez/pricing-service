@@ -1,10 +1,13 @@
 package com.pricing.services.controller;
 
 import com.pricing.services.exceptions.PriceNotFoundException;
+import com.pricing.services.exceptions.errors.ErrorResponse;
 import com.pricing.services.model.dto.PriceDto;
 import com.pricing.services.service.PriceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +28,12 @@ public class PriceController {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Price found successfully"),
-            @ApiResponse(responseCode = "404", description = "No valid price found")
+            @ApiResponse(responseCode = "400", description = "Invalid request",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "No valid price found",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Unexpected error",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping
     public PriceDto getPrice(

@@ -42,7 +42,7 @@ public class PriceEntity {
     private Integer priority;
 
     /* Product price */
-    private BigDecimal price;
+    private Double price;
 
     /* Currency in which the price is stated */
     private String currency;

@@ -27,7 +27,7 @@ public class Price {
     /**
      * The price value for the product.
      */
-    private BigDecimal price;
+    private Double price;
 
     /**
      * The currency in which the price is represented (e.g., EUR).

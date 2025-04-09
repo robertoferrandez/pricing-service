@@ -28,7 +28,7 @@ public class PriceDto {
     private String endDate;
 
     @Schema(description = "Price of the product", example = "35.50")
-    private BigDecimal price;
+    private Double price;
 
     @Schema(description = "Currency in which the price is set", example = "EUR")
     private String currency;
