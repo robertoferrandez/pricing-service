@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class PriceId implements Serializable {
 
     /* Brand ID */
@@ -28,8 +29,6 @@ public class PriceId implements Serializable {
     /* End date of the price validity */
     private LocalDateTime endDate;
 
-    // Default constructor (needed by JPA)
-    public PriceId() {}
 
 
 

@@ -1,8 +1,6 @@
 package com.pricing.services.model.domain;
 
 import lombok.*;
-
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 /**
  * Domain model that represents the price of a product.
@@ -12,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Price {
+public class PriceDomain {
 
     /**
      * The ID of the product for which the price is applicable.

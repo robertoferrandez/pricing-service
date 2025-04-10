@@ -3,7 +3,6 @@ package com.pricing.services.model.dto;
 import lombok.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.math.BigDecimal;
 
 /**
  * DTO to represent product prices in a simple way.
