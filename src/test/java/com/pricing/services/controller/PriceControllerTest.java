@@ -2,7 +2,7 @@ package com.pricing.services.controller;
 
 import com.pricing.services.model.dto.PriceDto;
 import com.pricing.services.service.PriceService;
-import com.pricing.services.exceptions.PriceNotFoundException;
+import com.pricing.services.exceptions.custom.PriceNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -56,9 +56,8 @@ class PriceControllerTest {
                 .thenReturn(Optional.empty());
 
         // Call the controller directly and expect an exception
-        PriceNotFoundException exception = assertThrows(PriceNotFoundException.class, () -> {
-            priceController.getPrice(DATE, PRODUCT_ID, BRAND_ID);
-        });
+        PriceNotFoundException exception = assertThrows(PriceNotFoundException.class, () ->
+            priceController.getPrice(DATE, PRODUCT_ID, BRAND_ID));
 
         // Verify that the exception has the correct message
         assertEquals("No price found for the given parameters.", exception.getMessage());
@@ -74,9 +73,9 @@ class PriceControllerTest {
                 .thenThrow(new RuntimeException("Unexpected error"));
 
         // Call the controller directly and expect an exception
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            priceController.getPrice(DATE, PRODUCT_ID, BRAND_ID);
-        });
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+            priceController.getPrice(DATE, PRODUCT_ID, BRAND_ID)
+        );
 
         // Verify that the exception has the correct message
         assertEquals("Unexpected error", exception.getMessage());

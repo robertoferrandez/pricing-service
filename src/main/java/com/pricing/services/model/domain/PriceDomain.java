@@ -47,6 +47,13 @@ public class PriceDomain {
      */
     private LocalDateTime endDate;
 
+
+    /**
+     * The price List
+     */
+    private Integer priceList;
+
+
     /**
      * Checks if the price is valid at the given date.
      *

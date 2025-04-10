@@ -1,6 +1,6 @@
 package com.pricing.services.controller;
 
-import com.pricing.services.exceptions.PriceNotFoundException;
+import com.pricing.services.exceptions.custom.PriceNotFoundException;
 import com.pricing.services.exceptions.errors.ErrorResponse;
 import com.pricing.services.model.dto.PriceDto;
 import com.pricing.services.service.PriceService;

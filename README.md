@@ -8,6 +8,7 @@ A Spring Boot-based service for retrieving and managing pricing information for 
 3. [API Documentation](#api-documentation)
 4. [Testing](#testing)
 
+
 ## About
 - Uso este espacio para comentar ciertas aclaraciones, en un principio he desarrollado este microservicio para que sea lo mas escalable posible, haciendo una separación en capas.
 Un poco con esa intencion he incluido ciertos bloques de código que aunque no se pedian (y aunque ahora mismo no se utilizan) sirven para representar el diseño de la aplicacion que tenia en mente.
@@ -92,9 +93,14 @@ To manually test the Pricing Service API, you can use tools like **Postman** or 
     GET http://localhost:8080/price?date=2022-01-01-12.00.00&product_id=35455&brand_id=1
 
 ### Automated Testing
+- For jacoco reports: 
+   ```bash
+   mvn clean verify
+And check: target/site/jacoco/index.html
 
-If you want to run automated tests for the service layer, the project includes unit and integration tests using **JUnit**. You can run them using Maven:
+- If you want to run automated tests for the service layer, the project includes unit and integration tests using **JUnit**. You can run them using Maven:
 
  Run all tests:
    ```bash
-   mvn test
+   mvn clean test
+   

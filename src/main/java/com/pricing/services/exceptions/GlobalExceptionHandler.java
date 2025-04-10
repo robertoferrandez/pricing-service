@@ -1,5 +1,6 @@
 package com.pricing.services.exceptions;
 
+import com.pricing.services.exceptions.custom.PriceNotFoundException;
 import com.pricing.services.exceptions.errors.ErrorResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
