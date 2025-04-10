@@ -6,13 +6,14 @@ import com.pricing.services.model.entity.PriceEntity;
 import com.pricing.services.utils.Utils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 /**
  * Mapper responsible for converting between entities, domain models, and DTOs.
  * It facilitates the transformation of data between internal and external representations.
  */
-@Mapper(componentModel = "spring", imports = {Utils.class})
+@Mapper(componentModel = "spring", imports = {Utils.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PriceMapper {
 
     /**
@@ -58,5 +59,7 @@ public interface PriceMapper {
      */
     @Mapping(target = "startDate", expression = "java(Utils.toLocalDateTime(dto.getStartDate()))")
     @Mapping(target = "endDate", expression = "java(Utils.toLocalDateTime(dto.getEndDate()))")
+    @Mapping(target = "priority", ignore = true)
+    @Mapping(target = "priceList", ignore = true)
     PriceDomain dtoToDomain(PriceDto dto);
 }
