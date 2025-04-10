@@ -10,7 +10,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 public class PriceController {
 
     private final PriceService priceService;
+
+    // Expresión regular para el formato "yyyy-MM-dd-HH.mm.ss"
+    private static final String DATE_PATTERN = "\\d{4}-\\d{2}-\\d{2}-\\d{2}\\.\\d{2}\\.\\d{2}";
 
     @Operation(
             summary = "Get applicable price for product and brand",
@@ -39,7 +46,8 @@ public class PriceController {
     public PriceDto getPrice(
             @Parameter(description = "Query date (format: yyyy-MM-dd-HH.mm.ss)",
                     example = "2020-06-14-15.00.00")
-            @RequestParam String date,
+            @Pattern(regexp = DATE_PATTERN, message = "Invalid date format. Expected format: yyyy-MM-dd-HH.mm.ss")
+            @Valid String date,
 
             @Parameter(description = "Product ID", example = "35455")
             @RequestParam(name = "product_id") Long productId,

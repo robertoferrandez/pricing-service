@@ -1,6 +1,7 @@
 package com.pricing.services.exceptions;
 
 import com.pricing.services.exceptions.errors.ErrorResponse;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -44,6 +45,26 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .errorCode("400")  // HTTP 400 Bad Request
                 .message(errorMessage)
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+
+    /**
+     * Handles MissingServletRequestParameterException and returns a 400 Bad Request error
+     * with a message indicating which parameter is missing.
+     * @param ex the exception thrown
+     * @return the response entity with the error details
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleWrongParameters(ConstraintViolationException ex) {
+
+        // Building the error response with a timestamp
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorCode("400")  // HTTP 400 Bad Request
+                .message(ex.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
 
