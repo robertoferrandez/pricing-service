@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 public class ErrorResponse {
     @Schema(description = "ErrorCode", example = "400 | 404 | 500")
     private String errorCode;
-    @Schema(description = "mesage", example = "Error description")
+    @Schema(description = "message", example = "Error description")
     private String message;
-    @Schema(description = "mesage", example = "2024-12-31-23.59.59")
+    @Schema(description = "timestamp", example = "2024-12-31-23.59.59")
     private LocalDateTime timestamp;
 
     // Constructor con todos los parámetros

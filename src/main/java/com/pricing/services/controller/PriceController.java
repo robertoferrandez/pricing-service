@@ -34,7 +34,8 @@ public class PriceController {
             description = "Returns the current price for a product and brand on a given date."
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Price found successfully"),
+            @ApiResponse(responseCode = "200",  description = "Price found successfully",
+            content =  @Content(mediaType = "application/json", schema = @Schema(implementation = PriceDto.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "404", description = "No valid price found",
