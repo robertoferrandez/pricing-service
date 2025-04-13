@@ -1,4 +1,4 @@
-package com.pricing.services.model.dto;
+package com.pricing.services.model.dto.login;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Login {
+public class LoginDto {
 
     @Schema(description = "the username", example = "admin")
     private String username;

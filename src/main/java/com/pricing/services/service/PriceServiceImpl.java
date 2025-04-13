@@ -2,7 +2,7 @@ package com.pricing.services.service;
 
 import com.pricing.services.mapper.PriceMapper;
 import com.pricing.services.model.domain.PriceDomain;
-import com.pricing.services.model.dto.PriceDto;
+import com.pricing.services.model.dto.prices.PriceDto;
 import com.pricing.services.model.entity.PriceEntity;
 import com.pricing.services.policy.PricePolicy;
 import com.pricing.services.repository.PriceRepository;

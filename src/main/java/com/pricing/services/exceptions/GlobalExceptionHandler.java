@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
      * @return the response entity with the error details
      */
     @ExceptionHandler(InvalidLoginException.class)
-    public ResponseEntity<ErrorResponse> handleWrongLogin(ConstraintViolationException ex) {
+    public ResponseEntity<ErrorResponse> handleWrongLogin(InvalidLoginException ex) {
 
         // Building the error response with a timestamp
         ErrorResponse errorResponse = ErrorResponse.builder()

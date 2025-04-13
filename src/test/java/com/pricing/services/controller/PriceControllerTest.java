@@ -1,6 +1,6 @@
 package com.pricing.services.controller;
 
-import com.pricing.services.model.dto.PriceDto;
+import com.pricing.services.model.dto.prices.PriceDto;
 import com.pricing.services.service.PriceService;
 import com.pricing.services.exceptions.custom.PriceNotFoundException;
 import org.junit.jupiter.api.Test;

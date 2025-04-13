@@ -1,6 +1,6 @@
 package com.pricing.services.service;
 
-import com.pricing.services.model.dto.PriceDto;
+import com.pricing.services.model.dto.prices.PriceDto;
 
 import java.util.Optional;
 

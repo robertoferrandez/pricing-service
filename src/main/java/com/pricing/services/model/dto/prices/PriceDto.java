@@ -1,4 +1,4 @@
-package com.pricing.services.model.dto;
+package com.pricing.services.model.dto.prices;
 
 import lombok.*;
 import io.swagger.v3.oas.annotations.media.Schema;

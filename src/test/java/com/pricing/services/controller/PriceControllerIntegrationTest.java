@@ -1,7 +1,10 @@
 package com.pricing.services.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pricing.services.model.dto.PriceDto;
+import com.pricing.services.model.dto.prices.PriceDto;
+import com.pricing.services.security.JwtAuthFilter;
+import com.pricing.services.security.JwtUtil;
 import com.pricing.services.service.PriceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -28,11 +32,34 @@ public class PriceControllerIntegrationTest {
     @Autowired
     private PriceService priceService;
 
+    @Autowired
+    JwtAuthFilter jwtAuthFilter;
+
+    @Autowired
+    JwtUtil jwtUtil;
+
     private MockMvc mockMvc;
 
+    private String token;
+
     @BeforeEach
-    public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(priceController).build(); // Usamos standaloneSetup
+    public void setUp() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(priceController).build();
+        token = getJwtToken();
+    }
+
+
+    private String getJwtToken() throws Exception {
+        // Realiza una solicitud de login para obtener el token
+        String responseJson = mockMvc.perform(post("/login")
+                        .param("admin", "1234"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonResponse = mapper.readTree(responseJson);
+        return jsonResponse.get("jwt").asText();
     }
 
     @Test
@@ -49,7 +76,8 @@ public class PriceControllerIntegrationTest {
         String responseJson = mockMvc.perform(get("/prices")
                         .param("date", "2020-06-14-10.00.00")
                         .param("product_id", "35455")
-                        .param("brand_id", "1"))
+                        .param("brand_id", "1")
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -73,7 +101,8 @@ public class PriceControllerIntegrationTest {
         String responseJson = mockMvc.perform(get("/prices")
                         .param("date", "2020-06-14-16.00.00")  // Hora: 4:00 PM
                         .param("product_id", "35455")
-                        .param("brand_id", "1"))
+                        .param("brand_id", "1")
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -98,7 +127,8 @@ public class PriceControllerIntegrationTest {
         String responseJson =  mockMvc.perform(get("/prices")
                         .param("date", "2020-06-14-21.00.00")  // Hora: 9:00 PM
                         .param("product_id", "35455")
-                        .param("brand_id", "1"))
+                        .param("brand_id", "1")
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -123,7 +153,8 @@ public class PriceControllerIntegrationTest {
         String responseJson = mockMvc.perform(get("/prices")
                         .param("date", "2020-06-15-10.00.00")  // Hora: 10:00 AM (día 15)
                         .param("product_id", "35455")
-                        .param("brand_id", "1"))
+                        .param("brand_id", "1")
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -148,7 +179,8 @@ public class PriceControllerIntegrationTest {
         String responseJson = mockMvc.perform(get("/prices")
                         .param("date", "2020-06-16-21.00.00")  // Hora: 9:00 PM (día 16)
                         .param("product_id", "35455")
-                        .param("brand_id", "1"))
+                        .param("brand_id", "1")
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 

@@ -2,7 +2,7 @@ package com.pricing.services.mappers;
 
 import com.pricing.services.mapper.PriceMapper;
 import com.pricing.services.model.domain.PriceDomain;
-import com.pricing.services.model.dto.PriceDto;
+import com.pricing.services.model.dto.prices.PriceDto;
 import com.pricing.services.model.entity.PriceEntity;
 import com.pricing.services.utils.Utils;
 import org.junit.jupiter.api.BeforeEach;

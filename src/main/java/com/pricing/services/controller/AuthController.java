@@ -3,8 +3,8 @@ package com.pricing.services.controller;
 
 import com.pricing.services.exceptions.custom.InvalidLoginException;
 import com.pricing.services.exceptions.errors.ErrorResponse;
-import com.pricing.services.model.dto.Login;
-import com.pricing.services.model.dto.PriceDto;
+import com.pricing.services.model.dto.login.LoginDto;
+import com.pricing.services.model.dto.login.LoginDtoResponse;
 import com.pricing.services.security.JwtUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,18 +29,18 @@ public class AuthController {
             description = "Returns the user token through the username and password"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",  description = "Price found successfully",
-                    content =  @Content(mediaType = "application/json", schema = @Schema(implementation = PriceDto.class))),
+            @ApiResponse(responseCode = "200",  description = "Successfully loged in",
+                    content =  @Content(mediaType = "application/json", schema = @Schema(implementation = LoginDtoResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Login login) {
+    public ResponseEntity<LoginDtoResponse> login(@RequestBody LoginDto loginDto) {
+        LoginDtoResponse response = new LoginDtoResponse();
 
-
-        if ("admin".equals(login.getUsername()) && "1234".equals(login.getPassword())) {
-            String token = jwtUtil.generateToken(login.getUsername());
-            return ResponseEntity.ok(token);
+        if ("admin".equals(loginDto.getUsername()) && "1234".equals(loginDto.getPassword())) {
+            response.setJwt(jwtUtil.generateToken(loginDto.getUsername()));
+            return ResponseEntity.ok(response);
         }
 
         throw new InvalidLoginException("Invalid username or password");
