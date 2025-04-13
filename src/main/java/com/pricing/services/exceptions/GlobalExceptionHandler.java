@@ -1,5 +1,6 @@
 package com.pricing.services.exceptions;
 
+import com.pricing.services.exceptions.custom.InvalidLoginException;
 import com.pricing.services.exceptions.custom.PriceNotFoundException;
 import com.pricing.services.exceptions.errors.ErrorResponse;
 import jakarta.validation.ConstraintViolationException;
@@ -61,6 +62,25 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleWrongParameters(ConstraintViolationException ex) {
+
+        // Building the error response with a timestamp
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorCode("400")  // HTTP 400 Bad Request
+                .message(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handles MissingServletRequestParameterException and returns a 400 Bad Request error
+     * with a message indicating bad login parameters
+     * @param ex the exception thrown
+     * @return the response entity with the error details
+     */
+    @ExceptionHandler(InvalidLoginException.class)
+    public ResponseEntity<ErrorResponse> handleWrongLogin(ConstraintViolationException ex) {
 
         // Building the error response with a timestamp
         ErrorResponse errorResponse = ErrorResponse.builder()
