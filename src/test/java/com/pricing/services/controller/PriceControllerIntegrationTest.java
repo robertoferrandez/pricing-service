@@ -2,6 +2,7 @@ package com.pricing.services.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pricing.services.model.dto.login.LoginDto;
 import com.pricing.services.model.dto.prices.PriceDto;
 import com.pricing.services.security.JwtAuthFilter;
 import com.pricing.services.security.JwtUtil;
@@ -11,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -24,10 +25,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class PriceControllerIntegrationTest {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private PriceController priceController;
+
+    @Autowired
+    private AuthController authController;
 
     @Autowired
     private PriceService priceService;
@@ -38,26 +42,28 @@ public class PriceControllerIntegrationTest {
     @Autowired
     JwtUtil jwtUtil;
 
+    @Autowired
     private MockMvc mockMvc;
 
     private String token;
 
     @BeforeEach
     public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(priceController).build();
+//        mockMvc = MockMvcBuilders.standaloneSetup(priceController).build();
         token = getJwtToken();
     }
 
 
     private String getJwtToken() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
         // Realiza una solicitud de login para obtener el token
         String responseJson = mockMvc.perform(post("/login")
-                        .param("admin", "1234"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(LoginDto.builder().username("admin").password("1234").build())))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
 
-        ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonResponse = mapper.readTree(responseJson);
         return jsonResponse.get("jwt").asText();
     }
