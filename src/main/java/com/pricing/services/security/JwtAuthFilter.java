@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -27,40 +28,40 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Si el endpoint es público, simplemente pasa la solicitud
+        // If the endpoint is public, just continue with the request
         if (isPublicEndpoint(request)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Obtener el encabezado Authorization
-        String authHeader = request.getHeader("Authorization");
+        // Get the Authorization header
+        String authHeader = request.getHeader(AUTH_HEADER);
 
-        // Si el token no está presente, retornar un error
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            writeErrorResponse(response, "401", "Token not found");
+        // If the token is not present, return an error
+        if (authHeader == null || !authHeader.startsWith(TOKEN_PREFIX)) {
+            writeErrorResponse(response, "Token not found");
             return;
         }
 
-        // Extraer el token del encabezado
+        // Extract the token from the header
         String token = authHeader.substring(7);
 
-        // Verificar si el token es válido
+        // Validate the token
         if (!jwtUtil.isTokenValid(token)) {
-            writeErrorResponse(response, "401", "Invalid token");
+            writeErrorResponse(response, "Invalid token");
             return;
         }
 
-        // Extraer el nombre de usuario del token y establecer la autenticación
+        // Extract the username from the token and set the authentication
         String username = jwtUtil.extractUsername(token);
         SecurityContextHolder.getContext().setAuthentication(
                 new UsernamePasswordAuthenticationToken(username, null, List.of())
         );
 
-        // Continuar con la cadena de filtros
+        // Continue with the filter chain
         filterChain.doFilter(request, response);
     }
 
@@ -69,22 +70,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         return PublicEndpoints.LIST.stream().anyMatch(path::startsWith);
     }
 
-    private String extractToken(HttpServletRequest request) {
-        String authHeader = request.getHeader(AUTH_HEADER);
-        if (authHeader != null && authHeader.startsWith(TOKEN_PREFIX)) {
-            return authHeader.substring(TOKEN_PREFIX.length());
-        }
-        return null;
-    }
-
-    private void authenticateUser(String token) {
-        String username = jwtUtil.extractUsername(token);
-        var auth = new UsernamePasswordAuthenticationToken(username, null, List.of());
-        SecurityContextHolder.getContext().setAuthentication(auth);
-    }
-
-    private void writeErrorResponse(HttpServletResponse response, String code, String message) throws IOException {
-        ErrorResponse errorResponse = new ErrorResponse(code, message, LocalDateTime.now());
+    private void writeErrorResponse(HttpServletResponse response, String message) throws IOException {
+        ErrorResponse errorResponse = new ErrorResponse("401", message, LocalDateTime.now());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.getWriter().write(objectMapper.writeValueAsString(errorResponse));

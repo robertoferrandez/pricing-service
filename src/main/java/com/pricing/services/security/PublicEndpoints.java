@@ -1,8 +1,14 @@
 package com.pricing.services.security;
 
+
 import java.util.List;
 
+
 public class PublicEndpoints {
+
+    private PublicEndpoints() {
+    }
+
     public static final List<String> LIST = List.of(
             "/login",
             "/swagger-ui",

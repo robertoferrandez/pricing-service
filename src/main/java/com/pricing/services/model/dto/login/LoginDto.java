@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 
 /**
- *
+ * DTO to represent login attributes in a simple way.
  * LoginDto
  */
 @Data
