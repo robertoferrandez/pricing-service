@@ -15,6 +15,7 @@ Un poco con esa intencion he incluido ciertos bloques de código que aunque no s
 
    Ejemplos de ello son mapeos, creados que no se utilizan porque no son necesarios en PriceMapper, PricePolicy o la funcion isValidAt dentro de Price.
 
+
 - Entiendo además que el formato de las fechas indicado es el que se espera tanto como entrada, como salida ya que en h2 no deja cargar ese formato de fechas como timestamp. (Otra opción hubiera sido dar de alta los campos fecha como string en BBDD, aunque no he optado por esta opción)
 
 
