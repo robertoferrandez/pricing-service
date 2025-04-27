@@ -49,7 +49,6 @@ public class PriceControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-//        mockMvc = MockMvcBuilders.standaloneSetup(priceController).build();
         token = getJwtToken();
     }
 
@@ -69,7 +68,7 @@ public class PriceControllerIntegrationTest {
     }
 
     @Test
-    public void testGetPricePeticion10AM14Junio() throws Exception {
+    public void testGetPriceRequest10AM14June() throws Exception {
         // Simula un precio para la primera prueba (10:00 AM del 14 de junio)
         PriceDto expectedResponse = PriceDto.builder()
                 .brandId(1L)
@@ -93,7 +92,7 @@ public class PriceControllerIntegrationTest {
     }
 
     @Test
-    public void testGetPricePeticion4PM14Junio() throws Exception {
+    public void testGetPriceRequest4PM14June() throws Exception {
         PriceDto expectedResponse = PriceDto.builder()
                 .brandId(1L)
                 .startDate("2020-06-14-15.00.00")
@@ -118,7 +117,7 @@ public class PriceControllerIntegrationTest {
     }
 
     @Test
-    public void testGetPricePeticion9PM14Junio() throws Exception {
+    public void testGetPriceRequest9PM14June() throws Exception {
         // Simula un precio para la tercera prueba (9:00 PM del 14 de junio)
         PriceDto expectedResponse = PriceDto.builder()
                 .brandId(1L)
@@ -144,7 +143,7 @@ public class PriceControllerIntegrationTest {
     }
 
     @Test
-    public void testGetPricePeticion10AM15Junio() throws Exception {
+    public void testGetPriceRequest10AM15June() throws Exception {
         // Simula un precio para la cuarta prueba (10:00 AM del 15 de junio)
         PriceDto expectedResponse = PriceDto.builder()
                 .brandId(1L)
@@ -170,7 +169,7 @@ public class PriceControllerIntegrationTest {
     }
 
     @Test
-    public void testGetPrice_Peticion9PM16Junio() throws Exception {
+    public void testGetPriceRequest9PM16June() throws Exception {
         // Simula un precio para la quinta prueba (9:00 PM del 16 de junio)
 
         PriceDto expectedResponse = PriceDto.builder()

@@ -20,7 +20,6 @@ public class ErrorResponse {
     @Schema(description = "timestamp", example = "2024-12-31-23.59.59")
     private LocalDateTime timestamp;
 
-    // Constructor con todos los parámetros
     public ErrorResponse(String errorCode, String message) {
         this.errorCode = errorCode;
         this.message = message;

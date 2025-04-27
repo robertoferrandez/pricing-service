@@ -4,7 +4,6 @@ import com.pricing.services.mapper.PriceMapper;
 import com.pricing.services.model.domain.PriceDomain;
 import com.pricing.services.model.dto.prices.PriceDto;
 import com.pricing.services.model.entity.PriceEntity;
-import com.pricing.services.policy.PricePolicy;
 import com.pricing.services.repository.PriceRepository;
 import com.pricing.services.utils.Utils;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,9 +26,6 @@ class PriceServiceImplTest {
 
     @Mock
     private PriceMapper priceMapper;
-
-    @Mock
-    private PricePolicy pricePolicy;
 
     @InjectMocks
     private PriceServiceImpl priceService;

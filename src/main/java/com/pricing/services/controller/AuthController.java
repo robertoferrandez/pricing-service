@@ -30,7 +30,7 @@ public class AuthController {
             description = "Returns the user token through the username and password"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",  description = "Successfully loged in",
+            @ApiResponse(responseCode = "200",  description = "Successfully logged in",
                     content =  @Content(mediaType = "application/json", schema = @Schema(implementation = LoginDtoResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request",
                     content = @Content(

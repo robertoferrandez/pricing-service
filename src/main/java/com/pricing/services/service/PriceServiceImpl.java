@@ -4,12 +4,13 @@ import com.pricing.services.mapper.PriceMapper;
 import com.pricing.services.model.domain.PriceDomain;
 import com.pricing.services.model.dto.prices.PriceDto;
 import com.pricing.services.model.entity.PriceEntity;
-import com.pricing.services.policy.PricePolicy;
 import com.pricing.services.repository.PriceRepository;
 import com.pricing.services.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +29,15 @@ public class PriceServiceImpl implements PriceService {
 
         List<PriceEntity> pricesEntity = priceRepository.findValidPrices(productId, brandId, Utils.toLocalDateTime(date));
         List<PriceDomain> pricesDomain = priceMapper.entityToDomainList(pricesEntity);
-
-        Optional<PriceDto> priceDto = PricePolicy.getHighestPriority(pricesDomain).map(priceMapper::domainToDto);
+        Optional<PriceDto> priceDto = getHighestPriorityPrice(pricesDomain).map(priceMapper::domainToDto);
         log.info("Exiting getPriceForProductAndBrand with result: {}", priceDto.orElse(null));
         return priceDto;
 
+    }
+
+    private Optional<PriceDomain> getHighestPriorityPrice(List<PriceDomain> pricesDomain) {
+        return pricesDomain.stream()
+                .max(Comparator.comparingInt(PriceDomain::getPriority));
     }
 
 }

@@ -13,7 +13,7 @@ A Spring Boot-based service for retrieving and managing pricing information for 
 - Uso este espacio para comentar ciertas aclaraciones, en un principio he desarrollado este microservicio para que sea lo mas escalable posible, haciendo una separación en capas.
 Un poco con esa intencion he incluido ciertos bloques de código que aunque no se pedian (y aunque ahora mismo no se utilizan) sirven para representar el diseño de la aplicacion que tenia en mente.
 
-   Ejemplos de ello son mapeos, creados que no se utilizan porque no son necesarios en PriceMapper, PricePolicy o la funcion isValidAt dentro de Price.
+   Ejemplos de ello son mapeos, creados que no se utilizan porque no son necesarios en PriceMapper o la funcion isValidAt dentro de Price.
 
 
 - Entiendo además que el formato de las fechas indicado es el que se espera tanto como entrada, como salida ya que en h2 no deja cargar ese formato de fechas como timestamp. (Otra opción hubiera sido dar de alta los campos fecha como string en BBDD, aunque no he optado por esta opción)
